@@ -24,8 +24,8 @@ file_path = "Labels.csv"
 
 #Open and read the CSV file
 with open(file_path, mode='r') as csv_file:
-    reader = csv.DictReader(csv_file)
-    for row in reader:
+    reader = csv.DictReader(csv_file)#Read the file as a dictionary
+    for row in reader: #iterate through each row 
 
         message = json.dumps(row).encode('utf-8') # serialize the message
 
