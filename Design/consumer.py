@@ -24,13 +24,10 @@ print(f"Listening for messages on {subscription_path}..\n")
 def callback(message: pubsub_v1.subscriber.message.Message) -> None:
     # convert from bytes to dictionary (deserialization)
     message_data = json.loads(message.data.decode('utf-8'));
+    data = json.dumps(message_data) # Re-serialize the dictionary back into a JSON string
     
-    print("Consumed record with value : ")
+    print(f"Consumed recorded with value: b'{data}'")
 
-    for k, v in message_data.items():
-        print(f" {k}: {v}")
-
-   
    # Report To Google Pub/Sub the successful processed of the received messages
     message.ack()
     
