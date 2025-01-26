@@ -10,8 +10,8 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=files[0];
 
 # Set the project_id with your project ID
 project_id="dynamic-nomad-448416-h3";
-topic_name = "testTopic";   # change it for your topic name if needed
-subscription_id = "testTopic-sub";   # change it for your topic name if needed
+topic_name = "smartMeter";   # change it for your topic name if needed
+subscription_id = "smartMeter-sub";   # change it for your topic name if needed
 
 # create a subscriber to the subscriber for the project using the subscription_id
 subscriber = pubsub_v1.SubscriberClient()
@@ -22,8 +22,8 @@ print(f"Listening for messages on {subscription_path}..\n")
 
 # A callback function for handling received messages
 def callback(message: pubsub_v1.subscriber.message.Message) -> None:
-    # convert from bytes to string (deserialization)
-    message_data = str(message.data);
+    # convert from bytes to dictionary (deserialization)
+    message_data = json.loads(message.data.decode('utf-8'));
     
     print("Consumed record with value : {}" .format(message_data))
    
@@ -38,4 +38,3 @@ with subscriber:
         streaming_pull_future.result()
     except KeyboardInterrupt:
         streaming_pull_future.cancel()
-        
